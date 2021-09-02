@@ -11,14 +11,22 @@ import { NavSection } from './NavSection'
 export function SidebarNav() {
 	return (
 		<Stack spacing='12' align='flex-start'>
-			<NavSection title='General'>
-				<NavLink icon={RiDashboardLine}>DASHBOARD</NavLink>
-				<NavLink icon={RiContactsLine}>Users</NavLink>
+			<NavSection title='GENERAL'>
+				<NavLink href='/dashboard' icon={RiDashboardLine}>
+					Dashboard
+				</NavLink>
+				<NavLink href='/users' icon={RiContactsLine}>
+					Users
+				</NavLink>
 			</NavSection>
 
-			<NavSection title='Automation'>
-				<NavLink icon={RiInputMethodLine}>Forms</NavLink>
-				<NavLink icon={RiGitMergeLine}>AUTOMATION</NavLink>
+			<NavSection title='AUTOMATION'>
+				<NavLink href='/forms' icon={RiInputMethodLine}>
+					Forms
+				</NavLink>
+				<NavLink href='/automation' icon={RiGitMergeLine}>
+					Automation
+				</NavLink>
 			</NavSection>
 		</Stack>
 	)

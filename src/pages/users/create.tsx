@@ -8,6 +8,7 @@ import {
 	SimpleGrid,
 	VStack,
 } from '@chakra-ui/react'
+import Link from 'next/link'
 import { Input } from '../../components/Form/Input'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
@@ -27,7 +28,7 @@ export default function CreateUser() {
 				<Sidebar />
 				<Box
 					flex='1'
-					borderRadius={8}
+					borderRadius={['6', '8']}
 					bgColor='gray.800'
 					p='8'
 				>
@@ -37,10 +38,10 @@ export default function CreateUser() {
 
 					<Divider my='6' borderColor='gray.700'></Divider>
 
-					<VStack spacing='8'>
+					<VStack spacing={['6', '8']}>
 						<SimpleGrid
 							minChildWidth='240px'
-							spacing='8'
+							spacing={['6', '8']}
 							w='100%'
 						>
 							<Input name='name' label='Name' />
@@ -52,7 +53,7 @@ export default function CreateUser() {
 						</SimpleGrid>
 						<SimpleGrid
 							minChildWidth='240px'
-							spacing='8'
+							spacing={['6', '8']}
 							w='100%'
 						>
 							<Input
@@ -67,11 +68,13 @@ export default function CreateUser() {
 							/>
 						</SimpleGrid>
 					</VStack>
-					<Flex mt='8' justify='flex-end'>
+					<Flex mt={['6', '8']} justify='flex-end'>
 						<HStack spacing='4'>
-							<Button colorScheme='whiteAlpha'>
-								Cancel
-							</Button>
+							<Link href='/users' passHref>
+								<Button colorScheme='whiteAlpha'>
+									Cancel
+								</Button>
+							</Link>
 							<Button colorScheme='pink'>Save</Button>
 						</HStack>
 					</Flex>
