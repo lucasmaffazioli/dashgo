@@ -13,8 +13,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input } from '../../components/Form/Input'
+import { useToast } from '@chakra-ui/react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
+import { useRouter } from 'next/router'
 
 type FormValues = {
 	name: string
@@ -42,16 +44,13 @@ const createUserFormSchema = yup.object().shape({
 })
 
 export default function CreateUser() {
+	const router = useRouter()
+	const toast = useToast()
+
 	const {
 		register,
 		handleSubmit,
-		formState: {
-			errors,
-			isDirty,
-			isSubmitting,
-			touchedFields,
-			submitCount,
-		},
+		formState: { errors, isSubmitting },
 	} = useForm<FormValues>({
 		resolver: yupResolver(createUserFormSchema),
 	})
@@ -59,9 +58,19 @@ export default function CreateUser() {
 	const handleCreateUser: SubmitHandler<FormValues> =
 		async values => {
 			await new Promise(resolve =>
-				setTimeout(resolve, 2000)
+				setTimeout(resolve, 1000)
 			)
 			console.log(values)
+			console.log(errors)
+			toast({
+				title: 'User created',
+				// description: "We've created your account for you.",
+				status: 'success',
+				duration: 9000,
+				isClosable: true,
+			})
+			await new Promise(resolve => setTimeout(resolve, 300))
+			router.push('/users/')
 		}
 
 	return (

@@ -1,8 +1,14 @@
-import { Button, Flex, Stack } from '@chakra-ui/react'
+import {
+	Button,
+	Flex,
+	Stack,
+	useToast,
+} from '@chakra-ui/react'
 import Head from 'next/head'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useRouter } from 'next/router'
 
 import { Input } from '../components/Form/Input'
 
@@ -20,6 +26,8 @@ const signInFormSchema = yup.object().shape({
 })
 
 export default function SignIn() {
+	const router = useRouter()
+
 	const {
 		register,
 		handleSubmit,
@@ -40,6 +48,8 @@ export default function SignIn() {
 				setTimeout(resolve, 2000)
 			)
 			console.log(values)
+
+			router.push('/dashboard')
 		}
 
 	return (
