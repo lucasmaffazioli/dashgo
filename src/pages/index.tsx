@@ -1,7 +1,11 @@
 import { Button, Flex, Stack } from '@chakra-ui/react'
 
 import Head from 'next/head'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import {
+	SubmitHandler,
+	useForm,
+	useFormState,
+} from 'react-hook-form'
 import { Input } from '../components/Form/Input'
 
 type FormValues = {
@@ -10,10 +14,14 @@ type FormValues = {
 }
 
 export default function SignIn() {
-	const { register, handleSubmit } = useForm<FormValues>()
+	const { register, handleSubmit, formState } =
+		useForm<FormValues>()
 
 	const handleSignIn: SubmitHandler<FormValues> =
-		values => {
+		async values => {
+			await new Promise(resolve =>
+				setTimeout(resolve, 2000)
+			)
 			console.log(values)
 		}
 
@@ -71,6 +79,7 @@ export default function SignIn() {
 							mt='6'
 							colorScheme='pink'
 							size='lg'
+							isLoading={formState.isSubmitting}
 						>
 							Entrar
 						</Button>
