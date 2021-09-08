@@ -24,6 +24,13 @@ import Header from '../../components/Header'
 import { Pagination } from '../../components/Pagination'
 import Sidebar from '../../components/Sidebar'
 
+type User = {
+	id: string
+	name: string
+	email: string
+	created_at: string
+}
+
 export default function UserList() {
 	const { data, isLoading, error } = useQuery(
 		'users',
@@ -31,7 +38,23 @@ export default function UserList() {
 			const response = await fetch(
 				'http://localhost:3000/api/users'
 			)
-			return await response.json()
+			const data = await response.json()
+
+			const users: User[] = data.users.map((user: User) => {
+				return {
+					id: user.id,
+					name: user.name,
+					email: user.email,
+					created_at: new Date(
+						user.created_at
+					).toLocaleDateString('bt-BR', {
+						day: '2-digit',
+						month: 'long',
+						year: 'numeric',
+					}),
+				}
+			})
+			return users
 		}
 	)
 
@@ -111,150 +134,60 @@ export default function UserList() {
 									</Tr>
 								</Thead>
 								<Tbody>
-									<Tr>
-										<Td px={['4,', '4', '6']}>
-											<Checkbox colorScheme='pink' />
-										</Td>
-										<Td>
-											<Box>
-												<Text fontWeight='bold'>
-													Lucas Maffazioli
-												</Text>
-												<Text
-													fontSize='sm'
-													color='gray.300'
-												>
-													lucas.maffazioli@gmail.com
-												</Text>
-											</Box>
-										</Td>
-										{isWideVersion && (
-											<Td>4th of April, 2021</Td>
-										)}
-										<Td>
-											<Button
-												as='a'
-												size='sm'
-												fontSize='sm'
-												colorScheme='purple'
-												p={['1', '1', '2', '4']}
-												{...(isWideVersion && {
-													leftIcon: (
-														<Icon
-															as={RiPencilLine}
-															fontSize='20'
-														/>
-													),
-												})}
-											>
-												{isWideVersion ? (
-													'Edit'
-												) : (
-													<Icon
-														as={RiPencilLine}
-														fontSize='20'
-														mr={isWideVersion ? '2' : '0'}
-													/>
+									{data?.map((user: User) => {
+										return (
+											<Tr key={user.email}>
+												<Td px={['4,', '4', '6']}>
+													<Checkbox colorScheme='pink' />
+												</Td>
+												<Td>
+													<Box>
+														<Text fontWeight='bold'>
+															{user.name}
+														</Text>
+														<Text
+															fontSize='sm'
+															color='gray.300'
+														>
+															{user.email}
+														</Text>
+													</Box>
+												</Td>
+												{isWideVersion && (
+													<Td>{user.created_at}</Td>
 												)}
-											</Button>
-										</Td>
-									</Tr>
-									<Tr>
-										<Td px={['4,', '4', '6']}>
-											<Checkbox colorScheme='pink' />
-										</Td>
-										<Td>
-											<Box>
-												<Text fontWeight='bold'>
-													Lucas Maffazioli
-												</Text>
-												<Text
-													fontSize='sm'
-													color='gray.300'
-												>
-													lucas.maffazioli@gmail.com
-												</Text>
-											</Box>
-										</Td>
-										{isWideVersion && (
-											<Td>4th of April, 2021</Td>
-										)}
-										<Td>
-											<Button
-												as='a'
-												size='sm'
-												fontSize='sm'
-												colorScheme='purple'
-												p={['1', '1', '2', '4']}
-												{...(isWideVersion && {
-													leftIcon: (
-														<Icon
-															as={RiPencilLine}
-															fontSize='20'
-														/>
-													),
-												})}
-											>
-												{isWideVersion ? (
-													'Edit'
-												) : (
-													<Icon
-														as={RiPencilLine}
-														fontSize='20'
-														mr={isWideVersion ? '2' : '0'}
-													/>
-												)}
-											</Button>
-										</Td>
-									</Tr>
-									<Tr>
-										<Td px={['4,', '4', '6']}>
-											<Checkbox colorScheme='pink' />
-										</Td>
-										<Td>
-											<Box>
-												<Text fontWeight='bold'>
-													Lucas Maffazioli
-												</Text>
-												<Text
-													fontSize='sm'
-													color='gray.300'
-												>
-													lucas.maffazioli@gmail.com
-												</Text>
-											</Box>
-										</Td>
-										{isWideVersion && (
-											<Td>4th of April, 2021</Td>
-										)}
-										<Td>
-											<Button
-												as='a'
-												size='sm'
-												fontSize='sm'
-												colorScheme='purple'
-												p={['1', '1', '2', '4']}
-												{...(isWideVersion && {
-													leftIcon: (
-														<Icon
-															as={RiPencilLine}
-															fontSize='20'
-														/>
-													),
-												})}
-											>
-												{isWideVersion ? (
-													'Edit'
-												) : (
-													<Icon
-														as={RiPencilLine}
-														fontSize='20'
-														mr={isWideVersion ? '2' : '0'}
-													/>
-												)}
-											</Button>
-										</Td>
-									</Tr>
+												<Td>
+													<Button
+														as='a'
+														size='sm'
+														fontSize='sm'
+														colorScheme='purple'
+														p={['1', '1', '2', '4']}
+														{...(isWideVersion && {
+															leftIcon: (
+																<Icon
+																	as={RiPencilLine}
+																	fontSize='20'
+																/>
+															),
+														})}
+													>
+														{isWideVersion ? (
+															'Edit'
+														) : (
+															<Icon
+																as={RiPencilLine}
+																fontSize='20'
+																mr={
+																	isWideVersion ? '2' : '0'
+																}
+															/>
+														)}
+													</Button>
+												</Td>
+											</Tr>
+										)
+									})}
 								</Tbody>
 							</Table>
 							<Pagination />

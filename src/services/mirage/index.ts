@@ -21,14 +21,14 @@ export function makeServer() {
 				email() {
 					return faker.internet.email().toLowerCase()
 				},
-				createdAt() {
+				created_at() {
 					return faker.date.recent(10, new Date())
 				},
 			}),
 		},
 
 		seeds(server) {
-			server.createList('user', 200)
+			server.createList('user', 10)
 		},
 
 		routes() {
