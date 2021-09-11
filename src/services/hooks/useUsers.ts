@@ -10,6 +10,7 @@ type User = {
 
 type GetUsersReponse = {
 	totalCount: number
+	totalPages: number
 	users: User[]
 }
 
@@ -31,9 +32,7 @@ async function getUsers({
 	const data = response.data
 	const totalCount: number =
 		response.headers['x-total-count']
-
-	console.log('response')
-	console.log(response)
+	const totalPages: number = response.headers['total-pages']
 
 	const users: User[] = data.users.map((user: User) => {
 		return {
@@ -51,12 +50,17 @@ async function getUsers({
 	})
 	return {
 		totalCount: totalCount,
+		totalPages: totalPages,
 		users: users,
 	}
 }
 
 export function useUsers(params: GetUsersParams) {
-	return useQuery('users', () => getUsers(params), {
-		staleTime: 1000 * 5,
-	})
+	return useQuery(
+		['users', params.page, params.per_page],
+		() => getUsers(params),
+		{
+			staleTime: 1000 * 5,
+		}
+	)
 }

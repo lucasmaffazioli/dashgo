@@ -13,11 +13,11 @@ interface PaginationProps {
 	totalPages: number
 	currentPage: number
 	boundaryCount?: number
+	setPage: Function
 }
 
 type Item = {
 	type: ItemType
-	// subType?: ItemSubType
 	page?: number
 }
 
@@ -25,15 +25,12 @@ enum ItemType {
 	Page,
 	Dots,
 }
-// enum ItemSubType {
-// 	Previous,
-// 	Next,
-// }
 
 export function Pagination({
 	totalPages,
 	currentPage,
 	boundaryCount = 2,
+	setPage,
 }: PaginationProps) {
 	let isFirst = false
 	let isLast = false
@@ -47,6 +44,10 @@ export function Pagination({
 	}
 
 	function getItems() {
+		console.log('getItems()')
+		console.log(currentPage)
+		console.log(totalPages)
+
 		let items: Item[] = []
 
 		if (currentPage > boundaryCount + 1) {
@@ -63,19 +64,28 @@ export function Pagination({
 					page: i,
 					type: ItemType.Page,
 				})
-			} else {
-				if (i === totalPages) {
-					items.push({
-						type: ItemType.Dots,
-					})
-				}
 			}
+			// else {
+			// if (i === totalPages) {
+			// 	items.push({
+			// 		type: ItemType.Dots,
+			// 	})
+			// }
+			// }
+		}
+		if (currentPage < totalPages - boundaryCount) {
+			items.push({
+				type: ItemType.Dots,
+			})
 		}
 
 		return items
 	}
 
 	const items = getItems()
+
+	console.log('items')
+	console.log(items)
 
 	return (
 		<Stack
@@ -102,8 +112,9 @@ export function Pagination({
 					) : (
 						<PaginationItem
 							key={item.page}
-							number={item.page}
+							number={item.page ?? 0}
 							isCurrent={item.page === currentPage}
+							setPage={setPage}
 						></PaginationItem>
 					)
 				)}
