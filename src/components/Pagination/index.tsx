@@ -47,13 +47,15 @@ export function Pagination({
 
 	if (currentPage === totalPages) {
 		isLast = true
+		console.log('asdasdas')
 	}
 
-	function getItems() {
-		console.log('getItems()')
-		console.log(currentPage)
-		console.log(totalPages)
+	console.log('lol')
+	console.log(typeof currentPage)
+	console.log(typeof totalPages)
+	console.log(isLast)
 
+	function getItems() {
 		let items: Item[] = []
 
 		if (currentPage > boundaryCount + 1) {

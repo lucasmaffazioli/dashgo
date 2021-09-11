@@ -30,9 +30,12 @@ async function getUsers({
 		},
 	})
 	const data = response.data
-	const totalCount: number =
+	const totalCount: number = Number(
 		response.headers['x-total-count']
-	const totalPages: number = response.headers['total-pages']
+	)
+	const totalPages: number = Number(
+		response.headers['total-pages']
+	)
 
 	const users: User[] = data.users.map((user: User) => {
 		return {
