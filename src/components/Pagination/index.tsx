@@ -14,6 +14,9 @@ interface PaginationProps {
 	currentPage: number
 	boundaryCount?: number
 	setPage: Function
+	totalRecords: number
+	intialRecord: number
+	finalRecord: number
 }
 
 type Item = {
@@ -31,6 +34,9 @@ export function Pagination({
 	currentPage,
 	boundaryCount = 2,
 	setPage,
+	totalRecords,
+	intialRecord,
+	finalRecord,
 }: PaginationProps) {
 	let isFirst = false
 	let isLast = false
@@ -96,8 +102,9 @@ export function Pagination({
 			spaccing='6'
 		>
 			<Box>
-				<strong>0</strong> - <strong>3</strong> of{' '}
-				<strong>100</strong>
+				<strong>{intialRecord}</strong> -{' '}
+				<strong>{finalRecord}</strong> of{' '}
+				<strong>{totalRecords}</strong>
 			</Box>
 
 			<HStack spacing='2'>

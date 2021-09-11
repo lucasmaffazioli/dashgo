@@ -33,11 +33,19 @@ type User = {
 
 export default function UserList() {
 	const [page, setPage] = useState(1)
+	const per_page = 10
 
 	const { data, isLoading, isFetching, error } = useUsers({
 		page: page,
-		per_page: 10,
+		per_page: per_page,
 	})
+
+	const intialRecord = page * per_page - per_page + 1
+	let finalRecord = page * per_page
+	if (data) {
+		if (finalRecord > data.totalCount)
+			finalRecord = data.totalCount
+	}
 
 	const isWideVersion = useBreakpointValue({
 		base: false,
@@ -180,6 +188,9 @@ export default function UserList() {
 								currentPage={page}
 								totalPages={data.totalPages}
 								setPage={setPage}
+								totalRecords={data.totalCount}
+								intialRecord={intialRecord}
+								finalRecord={finalRecord}
 							/>
 						</>
 					) : (

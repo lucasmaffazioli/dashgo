@@ -38,7 +38,7 @@ export function makeServer() {
 		},
 
 		seeds(server) {
-			server.createList('user', 40)
+			server.createList('user', 35)
 		},
 
 		routes() {
@@ -63,7 +63,9 @@ export function makeServer() {
 					200,
 					{
 						'x-total-count': String(total),
-						'total-pages': String(total / Number(per_page)),
+						'total-pages': String(
+							Math.ceil(total / Number(per_page))
+						),
 					},
 					{ users: users }
 				)
