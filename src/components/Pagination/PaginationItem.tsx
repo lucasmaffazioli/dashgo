@@ -1,13 +1,13 @@
 import { Button } from '@chakra-ui/react'
 
 interface PaginationItemProps {
-	number: number
+	number?: number
 	isCurrent?: boolean
 }
 
 export function PaginationItem({
 	isCurrent = false,
-	number,
+	number = 0,
 }: PaginationItemProps) {
 	if (isCurrent) {
 		return (

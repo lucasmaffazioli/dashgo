@@ -12,21 +12,28 @@ import { PaginationArrowItem } from './PaginationArrowItem'
 interface PaginationProps {
 	totalPages: number
 	currentPage: number
+	boundaryCount?: number
 }
 
 type Item = {
-	page?: number
 	type: ItemType
+	// subType?: ItemSubType
+	page?: number
 }
 
 enum ItemType {
 	Page,
 	Dots,
 }
+// enum ItemSubType {
+// 	Previous,
+// 	Next,
+// }
 
 export function Pagination({
 	totalPages,
 	currentPage,
+	boundaryCount = 2,
 }: PaginationProps) {
 	let isFirst = false
 	let isLast = false
@@ -47,7 +54,7 @@ export function Pagination({
 	function getItems() {
 		let items: Item[] = []
 
-		if (currentPage >= 3) {
+		if (currentPage > boundaryCount + 1) {
 			items.push({
 				type: ItemType.Dots,
 			})
@@ -58,7 +65,7 @@ export function Pagination({
 			// console.log('Diff')
 			// console.log(diff)
 
-			if (diff <= 3 && diff >= -3) {
+			if (diff <= boundaryCount && diff >= -boundaryCount) {
 				items.push({
 					page: i,
 					type: ItemType.Page,
@@ -77,7 +84,7 @@ export function Pagination({
 		return items
 	}
 
-	const lol = getItems()
+	const items = getItems()
 
 	return (
 		<Stack
@@ -98,7 +105,19 @@ export function Pagination({
 					enabled={!isFirst}
 				/>
 
-				<PaginationItem
+				{items.map(item =>
+					item.type === ItemType.Dots ? (
+						<Text px='2'>...</Text>
+					) : (
+						<PaginationItem
+							key={item.page}
+							number={item.page}
+							isCurrent={item.page === currentPage}
+						></PaginationItem>
+					)
+				)}
+
+				{/* <PaginationItem
 					isCurrent
 					number={1}
 				></PaginationItem>
@@ -106,8 +125,7 @@ export function Pagination({
 				<PaginationItem number={3}></PaginationItem>
 				<PaginationItem number={4}></PaginationItem>
 				<PaginationItem number={5}></PaginationItem>
-				<PaginationItem number={6}></PaginationItem>
-				<Text px='2'>...</Text>
+				<PaginationItem number={6}></PaginationItem> */}
 
 				<PaginationArrowItem
 					type='next'

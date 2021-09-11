@@ -170,7 +170,7 @@ export default function UserList() {
 									})}
 								</Tbody>
 							</Table>
-							<Pagination currentPage={5} totalPages={15} />
+							<Pagination currentPage={1} totalPages={15} />
 						</>
 					)}
 				</Box>
