@@ -187,7 +187,7 @@ export default function UserList() {
 							<Pagination
 								currentPage={page}
 								totalPages={data.totalPages}
-								setPage={setPage}
+								onPageChange={setPage}
 								totalRecords={data.totalCount}
 								intialRecord={intialRecord}
 								finalRecord={finalRecord}

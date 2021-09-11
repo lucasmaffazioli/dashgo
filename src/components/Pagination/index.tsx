@@ -13,7 +13,7 @@ interface PaginationProps {
 	totalPages: number
 	currentPage: number
 	boundaryCount?: number
-	setPage: Function
+	onPageChange: Function
 	totalRecords: number
 	intialRecord: number
 	finalRecord: number
@@ -32,8 +32,8 @@ enum ItemType {
 export function Pagination({
 	totalPages,
 	currentPage,
-	boundaryCount = 2,
-	setPage,
+	boundaryCount: SiblingsCount = 1,
+	onPageChange: setPage,
 	totalRecords,
 	intialRecord,
 	finalRecord,
@@ -47,43 +47,41 @@ export function Pagination({
 
 	if (currentPage === totalPages) {
 		isLast = true
-		console.log('asdasdas')
 	}
-
-	console.log('lol')
-	console.log(typeof currentPage)
-	console.log(typeof totalPages)
-	console.log(isLast)
 
 	function getItems() {
 		let items: Item[] = []
 
-		if (currentPage > boundaryCount + 1) {
+		if (currentPage > SiblingsCount + 1) {
 			items.push({
-				type: ItemType.Dots,
+				page: 1,
+				type: ItemType.Page,
 			})
+			if (currentPage > SiblingsCount + 2)
+				items.push({
+					type: ItemType.Dots,
+				})
 		}
 
 		for (let i = 1; i <= totalPages; i++) {
 			const diff = currentPage - i
 
-			if (diff <= boundaryCount && diff >= -boundaryCount) {
+			if (diff <= SiblingsCount && diff >= -SiblingsCount) {
 				items.push({
 					page: i,
 					type: ItemType.Page,
 				})
 			}
-			// else {
-			// if (i === totalPages) {
-			// 	items.push({
-			// 		type: ItemType.Dots,
-			// 	})
-			// }
-			// }
 		}
-		if (currentPage < totalPages - boundaryCount) {
+		if (currentPage < totalPages - SiblingsCount) {
+			if (currentPage < totalPages - SiblingsCount - 1)
+				items.push({
+					type: ItemType.Dots,
+				})
+
 			items.push({
-				type: ItemType.Dots,
+				page: totalPages,
+				type: ItemType.Page,
 			})
 		}
 

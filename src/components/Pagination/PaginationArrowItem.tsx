@@ -14,9 +14,9 @@ export function PaginationArrowItem({
 		return (
 			<Button size='sm' fontSize='xs' w='4' bg='gray.600'>
 				{type === 'previous' ? (
-					<FiArrowLeft />
+					<Icon as={FiArrowLeft} />
 				) : (
-					<FiArrowRight />
+					<Icon as={FiArrowRight} />
 				)}
 			</Button>
 		)
