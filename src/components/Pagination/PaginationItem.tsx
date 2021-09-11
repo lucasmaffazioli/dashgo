@@ -34,7 +34,7 @@ export function PaginationItem({
 				bg='gray.700'
 				disabled
 				_disabled={{
-					bg: 'gray.500',
+					bg: 'gray.600',
 					cursor: 'default',
 				}}
 			>
