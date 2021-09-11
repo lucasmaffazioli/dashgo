@@ -31,12 +31,12 @@ export function PaginationItem({
 				size='sm'
 				fontSize='xs'
 				w='4'
-				bg='gray.700'
-				disabled
-				_disabled={{
-					bg: 'gray.600',
-					cursor: 'default',
-				}}
+				bg='gray.600'
+				// disabled
+				// _disabled={{
+				// 	bg: 'gray.600',
+				// 	cursor: 'default',
+				// }}
 			>
 				{number}
 			</Button>

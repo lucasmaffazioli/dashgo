@@ -30,8 +30,19 @@ type User = {
 	created_at: string
 }
 
+// type UsesUsersReponse = {
+// 	totalCount: number
+// 	users: User[]
+// }
+
 export default function UserList() {
-	const { data, isLoading, isFetching, error } = useUsers()
+	const { data, isLoading, isFetching, error } = useUsers({
+		page: 1,
+		per_page: 10,
+	})
+
+	console.log('dataaaaaa')
+	console.log(data)
 
 	const isWideVersion = useBreakpointValue({
 		base: false,
@@ -94,7 +105,7 @@ export default function UserList() {
 						<Flex justify='center'>
 							Fail to obtain user data.
 						</Flex>
-					) : (
+					) : data ? (
 						<>
 							<Table colorScheme='whiteAlpha'>
 								<Thead>
@@ -114,7 +125,7 @@ export default function UserList() {
 									</Tr>
 								</Thead>
 								<Tbody>
-									{data?.map((user: User) => {
+									{data.users.map((user: User) => {
 										return (
 											<Tr key={user.email}>
 												<Td px={['4,', '4', '6']}>
@@ -170,8 +181,13 @@ export default function UserList() {
 									})}
 								</Tbody>
 							</Table>
-							<Pagination currentPage={1} totalPages={15} />
+							<Pagination
+								currentPage={1}
+								totalPages={data.totalCount}
+							/>
 						</>
+					) : (
+						<> </>
 					)}
 				</Box>
 			</Flex>
