@@ -1,9 +1,9 @@
 import {
+	ActiveModelSerializer,
 	createServer,
 	Factory,
 	Model,
 	Response,
-	RestSerializer,
 } from 'miragejs'
 import faker from 'faker'
 
@@ -16,7 +16,7 @@ type User = {
 export function makeServer() {
 	const server = createServer({
 		serializers: {
-			application: RestSerializer,
+			application: ActiveModelSerializer,
 		},
 
 		models: {

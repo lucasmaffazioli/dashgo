@@ -17,6 +17,9 @@ import { useToast } from '@chakra-ui/react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import { useRouter } from 'next/router'
+import { useMutation } from 'react-query'
+import { api } from '../../services/api'
+import { queryClient } from '../../services/queryClient'
 
 type FormValues = {
 	name: string
@@ -44,6 +47,22 @@ const createUserFormSchema = yup.object().shape({
 })
 
 export default function CreateUser() {
+	const createUser = useMutation(
+		async (user: FormValues) => {
+			const response = await api.post('users', {
+				user: {
+					...user,
+					created_at: new Date(),
+				},
+			})
+			return response.data.user
+		},
+		{
+			onSuccess: () => {
+				queryClient.invalidateQueries('users')
+			},
+		}
+	)
 	const router = useRouter()
 	const toast = useToast()
 
@@ -57,11 +76,8 @@ export default function CreateUser() {
 
 	const handleCreateUser: SubmitHandler<FormValues> =
 		async values => {
-			await new Promise(resolve =>
-				setTimeout(resolve, 1000)
-			)
-			console.log(values)
-			console.log(errors)
+			await createUser.mutateAsync(values)
+
 			toast({
 				title: 'User created',
 				// description: "We've created your account for you.",
