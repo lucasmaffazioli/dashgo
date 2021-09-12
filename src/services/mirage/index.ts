@@ -71,6 +71,7 @@ export function makeServer() {
 				)
 			})
 
+			this.get('/users/:id')
 			this.post('/users')
 
 			this.namespace = '' // Reverte a rota para permitir que as APIs do Next continuem podendo ser acessadas

@@ -60,10 +60,10 @@ async function getUsers({
 
 export function useUsers(params: GetUsersParams) {
 	return useQuery(
-		['users', params.page, params.per_page],
+		['users', params.page],
 		() => getUsers(params),
 		{
-			staleTime: 1000 * 5,
+			staleTime: 1000 * 60 * 10,
 		}
 	)
 }
